@@ -37,7 +37,7 @@ var zero = () => {
 
 
 var check = () => {
-    if( moves == 9 )        end( "DRAW" );
+    if( moves === 9 )       end( "DRAW" );
 
     for( var g = 1; g <= 2; g++ ){
         for( var y = 0; y <= 2; y++ ){
