@@ -8,7 +8,7 @@ const rooms = {};
 
 app.use( express.static( __dirname + '/client' ) );
 
-io.on('connection', ( socket ) => {
+io.on( 'connection', ( socket ) => {
     const user = {};
 
     socket.on( 'login', ( data, callback ) => {
