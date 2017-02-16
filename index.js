@@ -19,7 +19,6 @@ io.on( 'connection', ( socket ) => {
         user.restart = false;
         users[ user.id ] = user;
 
-        //user.socket.emit( 'error', 'Szukanie przeciwnika' );
 
         for( const id in users ){
             if( users[ id ].room === null && id !== user.id ){
