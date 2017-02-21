@@ -37,7 +37,7 @@ var zero = () => {
 
 
 var check = () => {
-    if( moves === 9 )       end( "DRAW" );
+    if( moves == 9 )        end( "DRAW" );
 
     for( var g = 1; g <= 2; g++ ){
         for( var y = 0; y <= 2; y++ ){
@@ -62,6 +62,7 @@ var check = () => {
 var end = name => {
   text[ 1 ].innerHTML = `${win}:${lose}`;
   text[ 2 ].innerHTML = `${win}:${lose}`;
+
   document.getElementById( "win" ).innerHTML = name;
   document.getElementById( "win_b" ).style.display = "block";
   document.getElementById( "win_b" ).classList.add( "fadeIn" );
@@ -69,5 +70,5 @@ var end = name => {
 
 document.getElementsByClassName( 'reset' )[ 0 ].addEventListener('click', () => {
   socket.emit( 'restart' );
-  console.log( 'Restart 1/2' );
+  document.getElementById( 'res' ).innerHTML = "Oczekiwanie na 2 gracza";
 });

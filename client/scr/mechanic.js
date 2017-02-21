@@ -10,7 +10,7 @@ socket.on( 'Start', ( socketId, xo ) => {
 });
 
 socket.on( 'err', () => {
-  id = null;
+  id  = null;
   zero();
   console.log('Twój przeciwnik wyszedł'); // enemy disconnect
   socket.emit( 'login' );
@@ -35,15 +35,15 @@ socket.on( 'turn', ( y, x, who ) => {
           check();
       }
 
-      if( you === turn ) text[ 0 ].innerHTML = 'Twój ruch'; // you turn
-      else               text[ 0 ].innerHTML = 'Ruch przeciwnika'; // enemy turn
+      if( you == turn ) text[ 0 ].innerHTML = 'Twój ruch'; // you turn
+      else              text[ 0 ].innerHTML = 'Ruch przeciwnika'; // enemy turn
 });
 
-socket.on( 'hide', () => {
-    console.log( 'Restart 2/2' );
+socket.on('hide', () => {
+    document.getElementById( 'res' ).innerHTML = "";
     console.log( 'Start next turn' );
     zero();
-    if( you === 1 ) you = 2;
-    else            you = 1;
+    if(you === 1) you = 2;
+    else          you = 1;
     document.getElementById( "win_b" ).style.display = "none";
 });
