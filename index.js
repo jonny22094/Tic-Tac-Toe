@@ -33,9 +33,11 @@ io.on( 'connection', ( socket ) => {
         }
     });
 
-    socket.on('turn', ( y, x, id, you ) => {
-        users[ id ].socket.emit( 'turn', y, x, you );
-                    socket.emit( 'turn', y, x, you );
+     socket.on('turn', ( y, x, id, you ) => {
+        if( id !== undefined && users[ id ] !== undefined ){
+            users[ id ].socket.emit( 'turn', y, x, you );
+                        socket.emit( 'turn', y, x, you );
+        }
     });
 
     socket.on('restart', () => {
