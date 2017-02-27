@@ -53,10 +53,12 @@ io.on( 'connection', ( socket ) => {
     });
 
     socket.on('disconnect', () => {
-        if( users[ socket.id ].room !== undefined && users[ socket.id ].room !== null )
-            users[ users[ socket.id ].room ].socket.emit( 'err' );
+        if( users[ socket.id ] !== undefined ){
+            if( users[ socket.id ].room !== undefined && users[ socket.id ].room !== null )
+                users[ users[ socket.id ].room ].socket.emit( 'err' );
 
-        delete users[ socket.id ];
+            delete users[ socket.id ];
+        }
     });
 
 
