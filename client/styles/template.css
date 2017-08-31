@@ -1,0 +1,43 @@
+body{
+    font-family: 'Quicksand', sans-serif;
+
+    width:100vw;
+    height:100vh;
+
+    margin: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container{
+    position: absolute;
+
+    background-color: #4C6472;
+
+    width: 312px;
+    height: 312px;
+}
+
+.map-container {
+    width: 312px;
+    height: 312px;
+}
+
+.brick-line {
+  display: flex;
+
+  margin-top: 3px;
+}
+
+.brick {
+  background-color: #56A3B0;
+
+  margin-left: 3px;
+
+  width: 100px;
+  height: 100px;
+}

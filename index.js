@@ -22,7 +22,7 @@ io.on( 'connection', ( socket ) => {
         }
     }
 
-    if( user.room == null ) {
+    if( user.room === null ) {
         const newRoom = {};
 
         newRoom.userOne = socket.id;
@@ -36,8 +36,6 @@ io.on( 'connection', ( socket ) => {
     }
 
     users[ socket.id ] = user;
-
-    console.log( user );
 
 });
 
