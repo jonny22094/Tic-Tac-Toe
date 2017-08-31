@@ -1,0 +1,24 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "description": "TicTacToe online",
+  "main": "index.js",
+  "dependencies": {
+      "socket.io": "^2.0.3",
+      "express": "^4.15.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+      "dev": "node index.js",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonny22094/Tic-Tac-Toe-node.js.git"
+  },
+  "author": "jonny22094",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonny22094/Tic-Tac-Toe-node.js/issues"
+  },
+  "homepage": "https://github.com/jonny22094/Tic-Tac-Toe-node.js#readme"
+}
