@@ -11,3 +11,5 @@ npm install
 ```
 node index.js
 ```
+
+default, server start in ``` 3000 port ``` 
