@@ -1,5 +1,13 @@
-# Tic-Tac-Toe online
+# Tic Tac Toe online
 
-This is tic-tac-toe online in node.js with socket.io
+## Installation
 
-You must install two moduls `express` and `socket.io`
+```
+npm install
+```
+
+## Run TicTacToe
+
+```
+node index.js
+```
