@@ -15,6 +15,7 @@ body{
 
 .container{
     position: absolute;
+    display: flex;
 
     background-color: #4C6472;
 
@@ -45,4 +46,8 @@ body{
 
   font-size: 75px;
   color: #fff;
+}
+
+.alert {
+  width: 150px;
 }
