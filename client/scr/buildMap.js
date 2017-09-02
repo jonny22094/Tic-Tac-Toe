@@ -7,6 +7,7 @@ for( let i = 0; i < 3; i++ ) {
     for( let j = i * 3; j < i * 3 + 3; j++ ) {
         let brick = document.createElement( "div" );
             brick.className = "brick";
+            brick.id = j;
 
         brick.addEventListener( "click", i => { move( j ); } );
 
