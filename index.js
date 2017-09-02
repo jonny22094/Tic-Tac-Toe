@@ -24,12 +24,15 @@ io.on( 'connection', ( socket ) => {
     }
 
     for( const id in rooms ){
-        if( rooms[ id ].userTwo === null ){
+        if ( rooms[ id ].userTwo === null ) {
             rooms[ id ].userTwo = socket;
             rooms[ id ].start   = true;
 
             user.room = id;
             user.round = 1;
+
+                         socket.emit( "alert", "Find opponent" );
+            rooms[ id ].userOne.emit( "alert", "Find opponent" );
 
                          socket.emit( "alert", "Opponent move" );
             rooms[ id ].userOne.emit( "alert", "You move" );
@@ -54,10 +57,8 @@ io.on( 'connection', ( socket ) => {
         socket.emit( "alert", "Waiting for oponent" );
     }
 
-    users[ socket.id ] = user;
-
     socket.on( "move", data => {
-        if ( user.round === rooms[ user.room ].round && rooms[ user.room ].map[ data ] === null && rooms[ user.room ].start ) {
+        if ( rooms[ user.room ] != null && user.round === rooms[ user.room ].round && rooms[ user.room ].map[ data ] === null && rooms[ user.room ].start ) {
                 rooms[ user.room ].map[ data ] = user.round;
                 rooms[ user.room ].moves++;
 
@@ -74,12 +75,12 @@ io.on( 'connection', ( socket ) => {
 
                           socket.emit( "end", "You win" );
 
-                          if( rooms[ socket.id ] == null ) rooms[ user.room ].userOne.emit( "end", "You lose" );
-                          else                             rooms[ socket.id ].userTwo.emit( "end", "You lose" );
+                          if ( rooms[ socket.id ] == null ) rooms[ user.room ].userOne.emit( "end", "You lose" );
+                          else                              rooms[ socket.id ].userTwo.emit( "end", "You lose" );
                     }
                 }
 
-                if( rooms[ user.room ].moves === 9 ) {
+                if ( rooms[ user.room ].moves === 9 ) {
                     rooms[ user.room ].start = false;
 
                     rooms[ user.room ].userOne.emit( "end", "Draw" );
@@ -91,6 +92,13 @@ io.on( 'connection', ( socket ) => {
     } )
 
     socket.once( "disconnect", () => {
+
+        if( rooms[ user.room ] != null ) {
+                 if ( rooms[ user.room ].userOne != null ) rooms[ user.room ].userOne.emit( "end", "You oponent disconnected" );
+            else if ( rooms[ user.room ].userTwo != null ) rooms[ user.room ].userTwo.emit( "end", "You oponent disconnected" );
+        }
+
+        delete rooms[ user.room ];
     } );
 
 });
