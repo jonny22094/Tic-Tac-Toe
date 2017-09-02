@@ -8,7 +8,7 @@ for( let i = 0; i < 3; i++ ) {
         let brick = document.createElement( "div" );
             brick.className = "brick";
 
-        brick.addEventListener( "click", i => { move( i ); } );
+        brick.addEventListener( "click", i => { move( j ); } );
 
         brickLine.appendChild( brick );
     }

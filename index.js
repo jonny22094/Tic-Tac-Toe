@@ -10,32 +10,50 @@ app.use( express.static( __dirname + '/client' ) );
 
 io.on( 'connection', ( socket ) => {
     const user = {
-        room: null
+        room: null,
+        round: null
     }
 
     for( const id in rooms ){
         if( rooms[ id ].userTwo === null ){
-            rooms[ id ].userTwo = socket.id;
-            user.room = id;
+            rooms[ id ].userTwo = socket;
+            rooms[ id ].start   = true;
 
-            //send socket ( find oponent )
+            user.room = id;
+            user.round = 1;
+
+                         socket.emit( "alert", "opponent move" );
+            rooms[ id ].userOne.emit( "alert", "you move" );
         }
     }
 
     if( user.room === null ) {
         const newRoom = {};
 
-        newRoom.userOne = socket.id;
+        newRoom.userOne = socket;
         newRoom.userTwo = null;
-        newRoom.maps    = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
+        newRoom.map     = new Array( 9 );
+        newRoom.round    = 0;
+        newRoom.start   = false;
 
         rooms[ socket.id ] = newRoom;
+
         user.room = socket.id;
+        user.round = 0;
 
         //send alert ( 'waiting for oponents' )
     }
 
     users[ socket.id ] = user;
+
+    socket.on( "move", data => {
+        if( users[ socket.id ].round === rooms[ users[ socket.id ].room ].round ) {
+            if( rooms[ users[ socket.id ].room ].start )
+                rooms[ users[ socket.id ].room ].map[ data ] = users[ socket.id ].round;
+
+            rooms[ users[ socket.id ].room ].round = rooms[ users[ socket.id ].room ].round ? 0 : 1;
+        }
+    } )
 
 });
 
