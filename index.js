@@ -4,8 +4,6 @@ const http    = require( 'http' ).Server( app );
 const io      = require( 'socket.io' )( http );
 
 const rooms = {};
-const users = {};
-
 const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -38,7 +36,7 @@ io.on( 'connection', ( socket ) => {
         }
     }
 
-    if( user.room === null ) {
+    if ( user.room === null ) {
         const newRoom = {};
 
         newRoom.userOne = socket;
@@ -59,38 +57,41 @@ io.on( 'connection', ( socket ) => {
     users[ socket.id ] = user;
 
     socket.on( "move", data => {
-        if( users[ socket.id ].round === rooms[ users[ socket.id ].room ].round && rooms[ users[ socket.id ].room ].map[ data ] === null && rooms[ users[ socket.id ].room ].start ) {
-                rooms[ users[ socket.id ].room ].map[ data ] = users[ socket.id ].round;
-                rooms[ users[ socket.id ].room ].moves++;
+        if ( user.round === rooms[ user.room ].round && rooms[ user.room ].map[ data ] === null && rooms[ user.room ].start ) {
+                rooms[ user.room ].map[ data ] = user.round;
+                rooms[ user.room ].moves++;
 
-                rooms[ users[ socket.id ].room ].userOne.emit( "move", { id: data, text: rooms[ users[ socket.id ].room ].round ? "X" : "O" } );
-                rooms[ users[ socket.id ].room ].userTwo.emit( "move", { id: data, text: rooms[ users[ socket.id ].room ].round ? "X" : "O" } );
+                rooms[ user.room ].userOne.emit( "move", { id: data, text: rooms[ user.room ].round ? "X" : "O" } );
+                rooms[ user.room ].userTwo.emit( "move", { id: data, text: rooms[ user.room ].round ? "X" : "O" } );
 
                 for( let i = 0; i < lines.length; i++ ) {
                     const [ a, b, c ] = lines[ i ];
 
-                    if ( rooms[ users[ socket.id ].room ].map[ a ] !== null
-                      && rooms[ users[ socket.id ].room ].map[ a ] === rooms[ users[ socket.id ].room ].map[ b ]
-                      && rooms[ users[ socket.id ].room ].map[ a ] === rooms[ users[ socket.id ].room ].map[ c ] ) {
-                          rooms[ users[ socket.id ].room ].start = false;
+                    if ( rooms[ user.room ].map[ a ] !== null
+                      && rooms[ user.room ].map[ a ] === rooms[ user.room ].map[ b ]
+                      && rooms[ user.room ].map[ a ] === rooms[ user.room ].map[ c ] ) {
+                          rooms[ user.room ].start = false;
 
                           socket.emit( "end", "You win" );
 
-                          if( rooms[ socket.id ] == null ) rooms[ users[ socket.id ].room ].userOne.emit( "end", "You lose" );
-                          else                                           rooms[ socket.id ].userTwo.emit( "end", "You lose" );
+                          if( rooms[ socket.id ] == null ) rooms[ user.room ].userOne.emit( "end", "You lose" );
+                          else                             rooms[ socket.id ].userTwo.emit( "end", "You lose" );
                     }
                 }
 
-                if( rooms[ users[ socket.id ].room ].moves === 9 ) {
-                    rooms[ users[ socket.id ].room ].start = false;
+                if( rooms[ user.room ].moves === 9 ) {
+                    rooms[ user.room ].start = false;
 
-                    rooms[ users[ socket.id ].room ].userOne.emit( "end", "Draw" );
-                    rooms[ users[ socket.id ].room ].userTwo.emit( "end", "Draw" );
+                    rooms[ user.room ].userOne.emit( "end", "Draw" );
+                    rooms[ user.room ].userTwo.emit( "end", "Draw" );
                 }
 
-                rooms[ users[ socket.id ].room ].round = rooms[ users[ socket.id ].room ].round ? 0 : 1;
+                rooms[ user.room ].round = rooms[ user.room ].round ? 0 : 1;
         }
     } )
+
+    socket.once( "disconnect", () => {
+    } );
 
 });
 
