@@ -48,6 +48,10 @@ body{
   color: #fff;
 }
 
+ul {
+  max-height: 312px;
+}
+
 .alert {
-  width: 150px;
+  width: 200px;
 }

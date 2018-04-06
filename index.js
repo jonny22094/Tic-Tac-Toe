@@ -27,6 +27,9 @@ io.on("connection", user => {
 
       roomId = room;
       sendData(roomId, "alert", "Game started");
+
+      sendData(roomId, "alert",
+        createSendData(room, ["You'r O and you start", "Your X. Your opponent starting"]), true);
     }
   }
 
@@ -52,6 +55,12 @@ io.on("connection", user => {
         room.ready = false;
       }
 
+      if(room.ready) {
+        sendData(roomId, "alert",
+          createSendData(roomId, [ room.turn ? "Your opponent's turn" : "Your turn",
+          room.turn ? "Your turn" : "Your opponent's turn"]), true);
+      }
+
       rooms[roomId] = room;
     }
   });
@@ -62,10 +71,25 @@ io.on("connection", user => {
   });
 });
 
-const sendData = (roomId, event, data) => {
-  rooms[roomId].players.map(user => {
-    user.emit(event, data);
-  });
+const createSendData = (room, content) => {
+  const data = {};
+  data[rooms[room].players[0].id] = content[0];
+  data[rooms[room].players[1].id] = content[1];
+
+  return data;
+}
+
+const sendData = (roomId, event, data, bool) => {
+  if(!bool) {
+    rooms[roomId].players.map(user => {
+      user.emit(event, data);
+    });
+  }
+  else {
+    rooms[roomId].players.map(user => {
+      user.emit(event, data[user.id]);
+    });
+  }
 }
 
 const createRoom = data => {

@@ -13,5 +13,7 @@ socket.on( "alert", data => {
         alert.className = "alert";
         alert.innerHTML = data;
 
+        console.log(data);
+
     document.getElementById( "alerts" ).appendChild( alert );
 } );
