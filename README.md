@@ -1,15 +1,21 @@
 # Tic Tac Toe online
+tic-tac-toe with socket.io
 
-## Installation
+![Tic-tac-toe](https://i.imgur.com/cvzopcu.png)
 
+## usage
+
+### Install
 ```
 npm install
 ```
 
-## Run TicTacToe
+### Run
 
 ```
 node index.js
 ```
 
 default, server start in ``` 3000 port ``` 
+
+
